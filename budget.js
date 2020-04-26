@@ -28,7 +28,7 @@ var totalBudget = 0;
 //Date Variables
 var date = new Date();
 var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-document.querySelector(".budget__title--month").innerHTML = months[date.getMonth()] + " " + date.getDate() + " " + "," + date.getFullYear();
+$(".budget__title--month").html(months[date.getMonth()] + " " + date.getDate() + " " + "," + date.getFullYear());
 
 
 
@@ -37,9 +37,9 @@ document.querySelector(".budget__title--month").innerHTML = months[date.getMonth
 
 function getInfo() {
 	//Declare the variables (Description, Income or Expense, and the value)
-	var description = document.querySelector(".add__description").value;
-	var value = document.querySelector(".add__value").value;
-	var type = document.querySelector(".add__type").value;
+	var description = $(".add__description").val();
+	var value = $(".add__value").val();
+	var type = $(".add__type").val();
 
 	return [description, value, type];
 
@@ -70,15 +70,16 @@ function totalExpensesCalculator(){
 //GET EXPENSES PERCENTAGES
 function expensesPercentage(){
 
+	
 
 }
 
 
 //TOTAL BUDGET CALCULATOR
 function totalBudgetCalculator(incListSpecVal, expListSpecVal) {
-	
+
 	totalBudget = incListSpecVal + expListSpecVal;
-	document.querySelector(".budget__value").textContent = totalBudget;
+	$(".budget__value").text(totalBudget);
 };
 
 
@@ -152,7 +153,7 @@ function budgetInfo([description, value, type]) {
 	if (this.type == 'inc'){
 		button.addEventListener('click', function(){
 			if (incList.length >= 1){
-				var income = document.querySelector(".incItem-" + (incomeNumber -1));
+				var income = $(".incItem-" + (incomeNumber -1));
 				income.remove("div");
 				incList.splice(incList[incList.length -1], 1 );
 				incListValue.splice(incList[incList.length -1], 1);
@@ -168,7 +169,7 @@ function budgetInfo([description, value, type]) {
 	else  {
 		button.addEventListener('click', function(){
 			if (expList.length >= 1){
-				var expenses = document.querySelector(".expItem-" + (expenseNumber -1));
+				var expenses = $(".expItem-" + (expenseNumber -1));
 				expenses.remove("div");
 				expList.splice(expList[expList.length - 1], 1);
 				expListValue.splice(expList[expList.length -1], 1);
@@ -203,7 +204,6 @@ function budgetInfo([description, value, type]) {
 
 
 	if (this.type == 'inc'){
-
 		const income__list = document.querySelector(".income__list");
 		return income__list.appendChild(div1);	
 	}
@@ -229,7 +229,7 @@ function typeHtmlBuilder(fn){
 		}
 		incList[listo.length - 1].htmlBuilder();
 	
-		document.querySelector(".budget__income--value").textContent  = totalIncomeCalculator();
+		$(".budget__income--value").text(totalIncomeCalculator());
 		
 	}
 
@@ -241,21 +241,16 @@ function typeHtmlBuilder(fn){
 			listo.push(i);	
 		}
 		expList[listo.length - 1].htmlBuilder();
-		document.querySelector(".budget__expenses--value").textContent = totalExpensesCalculator();
+		$(".budget__expenses--value").text(totalExpensesCalculator());
 		
 	}
 }
 
 
 //ITEMS BUILDER
-document.querySelector(".add__btn").addEventListener('click',  function(){
-
+$(".add__btn").on('click',  function(event){
+	
 typeHtmlBuilder(getInfo);
-
 totalBudgetCalculator(incListTotalVal, expListTotalVal);
-
-
-
-
 
 });
